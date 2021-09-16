@@ -11,3 +11,8 @@ Atnaujinimas1:
 * funkcija pild() papildyta taip, kad galėtų apskaičiuoti galutinį balą, naudojant medianą.
 * funkcija printas() papildyta taip, kad atspausdintų ir galutinį balą, apskaičiuotą naudojant medianą.
 * uždėtos sąlygos, patikrinančios, ar vartotojas įveda tinkamus duomenis.
+
+Atnaujinimas2:
+* programa papildyta taip, kad vartotojas galėtų pasirinkti, ar galutinį balą skaičiuoti pagal vidurkį ar medianą. Vartotojas pasirenka įvesdamas raidę "v" arba "m".
+* sukurtas dinaminis masyvas *nd[].
+* programa papildyta taip, kad vartotojui nereikėtų žinoti namų darbų skaičiaus iš anksto - baigęs vesti paskutinį pažymį, vartotojas įveda bet kokią raidę ir programa pati suskaičiuoja, kiek buvo įvesta namų darbų.
