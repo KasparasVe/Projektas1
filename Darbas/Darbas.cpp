@@ -32,7 +32,9 @@ int main()
 {
     studentas studentai[10];
     int k;
-    cout << "Iveskite studentu skaiciu ";
+    srand(time(NULL));
+
+    cout << "Iveskite studentu skaiciu: ";
     cin >> k;
     while (cin.fail() || k<0) {
         cout << "Klaida! Iveskite TEIGIAMA SVEIKA skaiciu" << endl;
@@ -48,60 +50,95 @@ int main()
 }
 
 void pild(studentas& kint) {
-
+    float sum = 0, vid = 0, n, med;
+    int count = 0;
 
     cout << "Iveskite studento varda ir pavarde: ";
     cin >> kint.vardas >> kint.pavarde;
-  
-    float sum = 0, vid = 0, n, med; 
-    int count = 0;
-    
-    cout << "Iveskite pazymi, kai baigsite, iveskite bet kokia raide" << endl;
 
-    while (cin >> n) {
-        kint.nd.push_back(n);
-        sum += n;
-        count++;
-    }
-       
-    while (count == 0) {
-        cout << "Klaida! Iveskite bent 1 pazymi" << endl;
+    cout << "Ar norite atsitiktinai generuoti pazymius? (Iveskite 't', jei taip, 'n' - jei ne): ";
+    char ats;
+    cin >> ats;
+    while (cin.fail() || (ats != 't' && ats != 'n')) {
+        cout << "Klaida! Iveskite raides 't' arba 'n'" << endl;
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cin >> ats;
+    }
+    if (ats == 't') {
+        cout << "Iveskite pazymiu skaiciu: ";
+        int sk;
+        cin >> sk;
+        while (cin.fail() || sk < 0) {
+            cout << "Klaida! Iveskite TEIGIAMA SVEIKA skaiciu" << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin >> sk;
+        }
+        for (int i = 0;i < sk;i++) {
+            int x = rand() % 10 + 1;
+            kint.nd.push_back(x);
+            sum += kint.nd[i];
+        }
+        kint.egzam = rand() % 10 + 1;
+        cout << "Ar galutini bala norite skaiciuoti pagal vidurki ar mediana? (Iveskite 'v', jei pagal vidurki, 'm' - pagal mediana):  ";
+        cin >> kint.skaiciavimas;
+        while (cin.fail() || (kint.skaiciavimas != 'v' && kint.skaiciavimas != 'm')) {
+            cout << "Klaida! Iveskite raides 'v' arba 'm'" << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin >> kint.skaiciavimas;
+        }
+        vid = sum / sk;
+        med = mediana(kint.nd);
+        kint.galutinisVid = vid * 0.4 + 0.6 * kint.egzam;
+        kint.galutinisMed = med * 0.4 + 0.6 * kint.egzam;
+
+    }
+    else if (ats == 'n') {
+        cout << "Iveskite pazymi, kai baigsite, iveskite bet kokia raide: "<<endl;
+
         while (cin >> n) {
             kint.nd.push_back(n);
             sum += n;
             count++;
         }
-    }
-    
-    cin.clear();
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    cout << "Iveskite egzamino bala: "; 
-    cin >> kint.egzam;
-    while (cin.fail() || kint.egzam < 0 || kint.egzam > 10) {
-        cout << "Klaida! Iveskite TEIGIAMA SVEIKA skaiciu 1-10" << endl;
+        while (count == 0) {
+            cout << "Klaida! Iveskite bent 1 pazymi" << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            while (cin >> n) {
+                kint.nd.push_back(n);
+                sum += n;
+                count++;
+            }
+        }
+
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        cout << "Iveskite egzamino bala: ";
         cin >> kint.egzam;
-    }
-    cout << "Spauskite v jei norite galutini bala skaiciuoti pagal vidurki ir m, jei pagal mediana: ";
-    cin >> kint.skaiciavimas;
-    while (cin.fail() || (kint.skaiciavimas != 'v' && kint.skaiciavimas != 'm') ){
-        cout << "Klaida! Iveskite raides v arba m" << endl;
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        while (cin.fail() || kint.egzam < 0 || kint.egzam > 10) {
+            cout << "Klaida! Iveskite TEIGIAMA SVEIKA skaiciu 1-10" << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin >> kint.egzam;
+        }
+        cout << "Ar galutini bala norite skaiciuoti pagal vidurki ar mediana? (Iveskite 'v', jei pagal vidurki, 'm' - pagal mediana):  ";
         cin >> kint.skaiciavimas;
+        while (cin.fail() || (kint.skaiciavimas != 'v' && kint.skaiciavimas != 'm')) {
+            cout << "Klaida! Iveskite raides 'v' arba 'm'" << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin >> kint.skaiciavimas;
+        }
+        vid = sum / count;
+        med = mediana(kint.nd);
+        kint.galutinisVid = vid * 0.4 + 0.6 * kint.egzam;
+        kint.galutinisMed = med * 0.4 + 0.6 * kint.egzam;
     }
-    vid = sum / count;
-    med = mediana(kint.nd);
-    kint.galutinisVid = vid * 0.4 + 0.6 * kint.egzam;
-    kint.galutinisMed = med * 0.4 + 0.6 * kint.egzam;
-
-
-
-
 }
 void printas(studentas &kin) {
 
