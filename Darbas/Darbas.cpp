@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <algorithm>
+#include <vector>
 
 using std::cout;
 using std::cin;
@@ -11,10 +12,11 @@ using std::setw;
 using std::left;
 using std::setprecision;
 using std::sort;
+using std::vector;
 
 struct studentas {
     string vardas, pavarde;
-    int* nd;
+    vector<float> nd;
     float egzam;
     float galutinisVid;
     float galutinisMed;
@@ -24,13 +26,13 @@ struct studentas {
 
 void pild(studentas& kint);
 void printas(studentas& kin);
-float mediana(int a[], int n);
+float mediana(vector<float> vec);
 
 int main()
 {
     studentas studentai[10];
     int k;
-    cout << "Kiek studentu bus?";
+    cout << "Iveskite studentu skaiciu ";
     cin >> k;
     while (cin.fail() || k<0) {
         cout << "Klaida! Iveskite TEIGIAMA SVEIKA skaiciu" << endl;
@@ -47,43 +49,34 @@ int main()
 
 void pild(studentas& kint) {
 
-    
-    
-    float med;
+
     cout << "Iveskite studento varda ir pavarde: ";
     cin >> kint.vardas >> kint.pavarde;
+  
+    float sum = 0, vid = 0, n, med; 
+    int count = 0;
     
-
-    
-    
-    float sum = 0, vid = 0; 
-    int n = 0;
-    kint.nd = new int[10];
     cout << "Iveskite pazymi, kai baigsite, iveskite bet kokia raide" << endl;
-    for (int i = 0; i < 10; i++)
-        if (cin >> kint.nd[i]) {
-            sum += kint.nd[i];
-            n++;
-        }
-        else { break; }
-    cin.clear();
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    while (n == 0) { 
-        cout << "Klaida! Iveskite bent 1 pazymi!" << endl;
-        for (int i = 0; i < 10; i++)
-            if (cin >> kint.nd[i]) {
-                sum += kint.nd[i];
-                n++;
-            }
-            else { break; }
+
+    while (cin >> n) {
+        kint.nd.push_back(n);
+        sum += n;
+        count++;
+    }
+       
+    while (count == 0) {
+        cout << "Klaida! Iveskite bent 1 pazymi" << endl;
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        while (cin >> n) {
+            kint.nd.push_back(n);
+            sum += n;
+            count++;
+        }
     }
-        
     
-    vid = sum / n;
-    med = mediana(kint.nd, n);
-    delete[] kint.nd;
+    cin.clear();
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     cout << "Iveskite egzamino bala: "; 
     cin >> kint.egzam;
@@ -101,7 +94,8 @@ void pild(studentas& kint) {
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cin >> kint.skaiciavimas;
     }
-
+    vid = sum / count;
+    med = mediana(kint.nd);
     kint.galutinisVid = vid * 0.4 + 0.6 * kint.egzam;
     kint.galutinisMed = med * 0.4 + 0.6 * kint.egzam;
 
@@ -117,9 +111,13 @@ void printas(studentas &kin) {
     else
         cout << setw(20) << left << kin.vardas << setw(20) << left << kin.pavarde << setw(20) << left << setprecision(3) << kin.galutinisMed << endl;
     }
-float mediana(int a[], int n) {
-    sort(a, a + n);
-    if (n % 2 != 0)
-        return (float)a[n / 2];
-    return (float)(a[(n - 1) / 2] + a[n / 2]) / 2.0;
+
+float mediana(vector<float> vec) {
+    typedef vector<float>::size_type vecSize;
+    vecSize size = vec.size();
+    if (size == 0)
+        throw std::domain_error("Klaida! Negalima skaiciuoti medianos tusciam vektoriui");
+    sort(vec.begin(), vec.end());
+    vecSize vid = size / 2;
+    return size % 2 == 0 ? (vec[vid] + vec[vid - 1]) / 2 : vec[vid];
 }
