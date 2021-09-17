@@ -20,3 +20,7 @@ Atnaujinimas2:
 Atnaujinimas3:
 * vietoj dinaminio masyvo namų darbų pažymiams kaupti sukurtas vektorius.
 * pakeista funkcija mediana(), kad galėtu dirbti su vektoriais. 
+
+Atnaujinimas4:
+* panaudojus funkciją rand(), sukurta galimybė vartotojui pasirinkti, ar namų darbų pažymius ir egzamino balą nori generuoti atsitiktinai. Vartotojas pasirenka įvesdamas raidę "t" arba "n".
+* preliminariai užbaigta versija v0.1
