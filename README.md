@@ -16,3 +16,7 @@ Atnaujinimas2:
 * programa papildyta taip, kad vartotojas galėtų pasirinkti, ar galutinį balą skaičiuoti pagal vidurkį ar medianą. Vartotojas pasirenka įvesdamas raidę "v" arba "m".
 * sukurtas dinaminis masyvas *nd[].
 * programa papildyta taip, kad vartotojui nereikėtų žinoti namų darbų skaičiaus iš anksto - baigęs vesti paskutinį pažymį, vartotojas įveda bet kokią raidę ir programa pati suskaičiuoja, kiek buvo įvesta namų darbų.
+
+Atnaujinimas3:
+* vietoj dinaminio masyvo namų darbų pažymiams kaupti sukurtas vektorius.
+* pakeista funkcija mediana(), kad galėtu dirbti su vektoriais. 
