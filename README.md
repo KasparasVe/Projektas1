@@ -24,3 +24,9 @@ Atnaujinimas3:
 Atnaujinimas4:
 * panaudojus funkciją rand(), sukurta galimybė vartotojui pasirinkti, ar namų darbų pažymius ir egzamino balą nori generuoti atsitiktinai. Vartotojas pasirenka įvesdamas raidę "t" arba "n".
 * preliminariai užbaigta versija v0.1
+
+Atnaujinimas5:
+* pradėta v0.2.
+* sukurta funkcija nuskaitymas(), kuri nuskaito studentų duomenis iš failo ir kviečia funkcijas uzpildymas() ir printas().
+* sukurta funkcija uzpildymas(), kuri užpildo struktūrą "studentas" nuskaitytais duomenimis.
+* v0.1 papyldyta taip, kad vartotojas galėtų pasirinkti, ar nori duomenis nuskaityti iš failo, ar pats juos įvesti.
