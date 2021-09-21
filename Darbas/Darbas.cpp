@@ -34,10 +34,11 @@ void printas(studentas& kin);
 float mediana(vector<float> vec);
 void nuskaitymas(string read, char s);
 void uzpildymas(studentas& k, string eilute);
+bool mycompare(studentas a, studentas b);
 
 int main()
 {
-    studentas studentai[10];
+    vector<studentas> studentai;
     int k;
     char answ, g;
     string name;
@@ -68,8 +69,13 @@ int main()
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cin >> k;
         }
-        for (int i = 0; i < k; i++)
-            pild(studentai[i]);
+        for (int i = 0; i < k; i++) {
+            studentas temp;
+            pild(temp);
+            studentai.push_back(temp);
+        }
+        sort(studentai.begin(), studentai.end(), mycompare);
+            
         cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis(Vid.)/Galutinis(Med.)"<< endl;
         for (int i = 0; i < k; i++)
             printas(studentai[i]);
@@ -212,9 +218,13 @@ void nuskaitymas(string read, char s) {
         tempas.skaiciavimas = s;
         uzpildymas(tempas, sarasas[i+1]);
         grupe.push_back(tempas);
-        printas(grupe[i]);
+        
     }
    
+    sort(grupe.begin(), grupe.end(), mycompare);
+    for (auto s : grupe) {
+        printas(s);
+    }
 
     }
     
@@ -255,6 +265,10 @@ void uzpildymas(studentas& k, string eilute) {
     k.galutinisVid = 0.4 * vid + 0.6 * k.egzam;
     k.galutinisMed = med * 0.4 + 0.6 * k.egzam;
     
+}
+
+bool mycompare(studentas a, studentas b) {
+    return a.vardas.compare(b.vardas) < 0;
 }
 
     
