@@ -31,7 +31,11 @@ Atnaujinimas5:
 * sukurta funkcija uzpildymas(), kuri užpildo struktūrą "studentas" nuskaitytais duomenimis.
 * v0.1 papyldyta taip, kad vartotojas galėtų pasirinkti, ar nori duomenis nuskaityti iš failo, ar pats juos įvesti.
 
-Atnaujinimas6;
+Atnaujinimas6:
 * sukurtas comparatorius mycompare(), kuris palygina 2 studentus pagal vardą.
 * programa papildyta taip, kad atspausdintas studentų sąrašas būtų surušiuotas abėcėlės tvarka pagal vardą.
-* preliminariai užbaigta versija v0.2
+
+Atnaujinimas7:
+* sukurta funkcija printfile(), kuri atspausdina nuskaitytų duomenų rezultatus, kuriuose matomas galutinis balas ir pagal vidurkį, ir pagal medianą.
+* pridėtas tekstinis failas "kursiokai.txt", iš kurio nuskaitomi duomenys programoje.
+* užbaigta versija v0.2 
