@@ -32,9 +32,10 @@ struct studentas {
 void pild(studentas& kint);
 void printas(studentas& kin);
 float mediana(vector<float> vec);
-void nuskaitymas(string read, char s);
+void nuskaitymas(string read);
 void uzpildymas(studentas& k, string eilute);
 bool mycompare(studentas a, studentas b);
+void printfile(studentas& stud);
 
 int main()
 {
@@ -46,19 +47,10 @@ int main()
     
     cout << "Ar norite duomenis nuskaityti is failo? (Jei taip, iveskite 't', jei ne - bet koki simboli): ";
     cin >> answ;
-    if (answ == 't') {
-        cout << "Kaip skaiciuoti galutinius balus? (Iveskite 'v', jei pagal vidurki, 'm' - pagal mediana): ";
-        cin >> g;
-        while (cin.fail() || (g != 'v' && g != 'm')) {
-            cout << "Klaida! Iveskite raides 'v' arba 'm'" << endl;
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cin >> g;
-        }
-        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis(Vid.)/Galutinis(Med.)" << endl;
-        nuskaitymas("kursiokai.txt", g);
-        
-        
+    if (answ == 't') { 
+        cout << "\n" << endl;
+        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis(Vid.)" << setw(20) << left << "Galutinis(Med.)"<< endl;
+        nuskaitymas("kursiokai.txt");   
     }
     else {
         cout << "Iveskite studentu skaiciu: ";
@@ -75,7 +67,7 @@ int main()
             studentai.push_back(temp);
         }
         sort(studentai.begin(), studentai.end(), mycompare);
-            
+        cout << "\n" << endl;
         cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis(Vid.)/Galutinis(Med.)"<< endl;
         for (int i = 0; i < k; i++)
             printas(studentai[i]);
@@ -195,7 +187,7 @@ float mediana(vector<float> vec) {
     return size % 2 == 0 ? (vec[vid] + vec[vid - 1]) / 2 : vec[vid];
 }
 
-void nuskaitymas(string read, char s) {
+void nuskaitymas(string read) {
     vector<string> sarasas;
     string eil;
     
@@ -215,7 +207,6 @@ void nuskaitymas(string read, char s) {
     
     for (int i = 0; i < sarasas.size()-1;i++) {
         studentas tempas;
-        tempas.skaiciavimas = s;
         uzpildymas(tempas, sarasas[i+1]);
         grupe.push_back(tempas);
         
@@ -223,7 +214,7 @@ void nuskaitymas(string read, char s) {
    
     sort(grupe.begin(), grupe.end(), mycompare);
     for (auto s : grupe) {
-        printas(s);
+        printfile(s);
     }
 
     }
@@ -271,6 +262,9 @@ bool mycompare(studentas a, studentas b) {
     return a.vardas.compare(b.vardas) < 0;
 }
 
+void printfile(studentas& stud) {
+    cout << setw(20) << left << stud.vardas << setw(20) << left << stud.pavarde << setw(20) << left << setprecision(3) << stud.galutinisVid << setw(20) << left << setprecision(3) << stud.galutinisMed << endl;
+}
     
 
     
