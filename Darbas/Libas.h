@@ -14,7 +14,7 @@ struct studentas {
 
 };
 
-extern vector<studentas> grupe;
+extern vector<studentas> group;
 extern vector<studentas> nabagai;
 extern vector<studentas> protingi;
 
@@ -22,7 +22,6 @@ void pild(studentas& kint);
 void printas(studentas& kin);
 float mediana(vector<float> vec);
 void nuskaitymas(string read);
-void uzpildymas(studentas& k, string eilute);
 bool mycompare(studentas a, studentas b);
 void printfile(studentas& stud);
 void tikrinimas(int &a);

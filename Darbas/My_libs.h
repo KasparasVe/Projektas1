@@ -7,4 +7,5 @@
 #include <fstream>
 #include <sstream> 
 #include <random>
+#include <numeric>
 

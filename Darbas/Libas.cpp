@@ -1,5 +1,6 @@
 #include "Libas.h"
 #include "Timer.h"
+#include <numeric>
 
 using std::cout;
 using std::cin;
@@ -15,7 +16,7 @@ using std::ifstream;
 using std::stringstream;
 using std::exception;
 
-vector<studentas> grupe;
+vector<studentas> group;
 vector<studentas> nabagai;
 vector<studentas> protingi;
 
@@ -124,55 +125,60 @@ float mediana(vector<float> vec) {
     return size % 2 == 0 ? (vec[vid] + vec[vid - 1]) / 2 : vec[vid];
 }
 void nuskaitymas(string read) {
-    vector<string> sarasas;
-    string eil;
     
+    string eil;
+    vector<string> eilutes;
 
     ifstream failas(read);
-
+    if (!failas) {
+        throw exception();
+    }
     while (failas) {
         if (!failas.eof()) {
             std::getline(failas, eil);
-            sarasas.push_back(eil);
-        }
+            eilutes.push_back(eil);
+          
+        }  
         else break;
+   
     }
     failas.close();
 
-    for (int i = 0; i < sarasas.size() - 1;i++) {
-        studentas tempas;
-        uzpildymas(tempas, sarasas[i]);
-        grupe.push_back(tempas);
-
-    }
+    eilutes.pop_back();
     
 
+    for (auto eil : eilutes) {
+        stringstream s(eil);
+        studentas tempas;
+        float sum, vid;
+        s >> tempas.vardas >> tempas.pavarde;
+        int k;
+        while (s >> k) {
+            tempas.nd.push_back(k);
 
-}
-void uzpildymas(studentas& k, string eilute) {
-    string str = eilute;
-    stringstream s(str);
-    float sum = 0, vid, med;
+        }
+
+        tempas.egzam = tempas.nd.back();
+        tempas.nd.pop_back();
 
 
-    float nd1, nd2, nd3, nd4, nd5, egzam;
-    s >> k.vardas >> k.pavarde >> nd1 >> nd2 >> nd3 >> nd4 >> nd5 >> k.egzam;
-    k.nd.push_back(nd1);
-    k.nd.push_back(nd2);
-    k.nd.push_back(nd3);
-    k.nd.push_back(nd4);
-    k.nd.push_back(nd5);
+        sum = std::accumulate(tempas.nd.begin(), tempas.nd.end(), 0);
 
-    for (float p : k.nd) {
-        sum += p;
+
+        vid = sum / tempas.nd.size();
+
+        float med = mediana(tempas.nd);
+
+
+
+        tempas.galutinisVid = 0.4 * vid + 0.6 * tempas.egzam;
+        tempas.galutinisMed = med * 0.4 + 0.6 * tempas.egzam;
+        group.push_back(tempas);
+
+
     }
 
-
-    vid = sum / k.nd.size();
-    med = mediana(k.nd);
-
-    k.galutinisVid = 0.4 * vid + 0.6 * k.egzam;
-    k.galutinisMed = med * 0.4 + 0.6 * k.egzam;
+    
 
 }
 bool mycompare(studentas a, studentas b) {
@@ -209,26 +215,26 @@ void create_file(string name, float sk) {
     std::ofstream failas;
     failas.open(name);
 
-    for (int i = 1;i < sk + 1;i++) {
+    for (unsigned int  i = 1;i < sk + 1;i++) {
         int nd1 = dist(mt);
         int nd2 = dist(mt);
         int nd3 = dist(mt);
         int nd4 = dist(mt);
         int nd5 = dist(mt);
         int egz = dist(mt);
-        failas << "Vardas" << i << "    Pavarde" << i << "        " << setw(10) << left << nd1 << setw(10) << left << nd2 << setw(10) << left << nd3 << setw(10) << left << nd4 << setw(10) << left << nd5 << setw(10) << left << egz << "\n";
+        failas << "Vardas" << i << "    Pavarde" << i << "        " << setw(10) << left << nd1 << setw(10) << left << nd2 << setw(10) << left << nd3 << setw(10) << left << nd4 << setw(10) << left << nd5 << setw(10) << left << egz << endl;
     }
     failas.close();
 
 }
 void padalijimas(vector<studentas>& vec) {
 
-    for (auto s : vec) {
-        if (s.galutinisVid < 5) {
-            nabagai.push_back(s);
+    for (auto p:vec) {
+        if (p.galutinisVid < 5) {
+            nabagai.push_back(p);
         }
         else {
-            protingi.push_back(s);
+            protingi.push_back(p);
         }
 
     }
@@ -238,9 +244,9 @@ void isvedimas(vector<studentas>& vec, string pav) {
     std::ofstream failas;
     failas.open(pav);
     failas << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis balas" << "\n";
-    for (int i = 0; i < vec.size();i++) {
+    for (auto p:vec) {
 
-        failas << setw(20) << left << vec[i].vardas << setw(20) << left << vec[i].pavarde << setw(20) << left << vec[i].galutinisVid << "\n";
+        failas << setw(20) << left << p.vardas << setw(20) << left << p.pavarde << setw(20) << left << p.galutinisVid << "\n";
     }
 
     failas.close();
