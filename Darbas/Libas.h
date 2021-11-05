@@ -3,6 +3,7 @@
 
 using std::string;
 using std::vector;
+using std::list;
 
 struct studentas {
     string vardas, pavarde;
@@ -14,15 +15,14 @@ struct studentas {
 
 };
 
-extern vector<studentas> grupe;
-extern vector<studentas> nabagai;
-extern vector<studentas> protingi;
+extern list<studentas> grupe;
+extern list<studentas> nabagai;
+extern list<studentas> protingi;
 
 void pild(studentas& kint);
 void printas(studentas& kin);
 float mediana(vector<float> vec);
 void nuskaitymas(string read);
-void uzpildymas(studentas& k, string eilute);
 bool mycompare(studentas a, studentas b);
 void printfile(studentas& stud);
 void tikrinimas(int &a);
@@ -33,6 +33,6 @@ void tikrinimas(int &a);
 
 
 void create_file(string name, float sk);
-void padalijimas(vector<studentas>& vec);
-void isvedimas(vector<studentas>& vec, string pav);
+void padalijimas(list<studentas>& lst);
+void isvedimas(list<studentas>& lst, string pav);
 
