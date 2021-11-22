@@ -10,128 +10,81 @@ using std::setw;
 using std::left;
 
 
+
 int main()
 {
 
-    //1.*****************************************************************************
-    cout << "1. 1 000 studentu:" << "\n";
+
+    int n;
+    cout << "Iveskite studentu skaiciu: ";
+    cin >> n;
+    cout << n << " studentu:" << "\n";
+    cout << "**********************NAUDOJANT LISTUS**********************" << endl << endl;
     Timer t0;
-    create_file("stud1000.txt", 1000);
-
     Timer t;
-    nuskaitymas("stud1000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
+    if (n == 1000) { nuskaitymas_lst("stud1000.txt"); }
+    else if(n==10000) { nuskaitymas_lst("stud10000.txt"); }
+    else if (n == 100000) { nuskaitymas_lst("stud100000.txt"); }
+    else if (n == 1000000) { nuskaitymas_lst("stud1000000.txt"); }
+    else if (n == 10000000) { nuskaitymas_lst("stud10000000.txt"); }
+    else { cout << "KLAIDA" << endl;
+    exit(EXIT_FAILURE);
+    }
+    float t1_lst = t.elapsed();
+    cout << "Nuskaityti duomenis is failo uztruko: " << t1_lst << " s" << endl;
 
     t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
+    padalijimas(grupe_lst);
+    float t2_lst = t.elapsed();
+    float t0_lst = t0.elapsed();
+    cout << "Studentu padalijimas i 2 listus uztruko: " << t2_lst << " s" << endl;
 
-    isvedimas(nabagai, "nabagai1k.txt");
-    isvedimas(protingi, "protingi1k.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
-    cout << "\n";
-    //2.*****************************************************************************
-    cout << "2. 10 000 studentu:" << "\n";
-    t0.reset();
-
-    create_file("stud10000.txt", 10000);
-
-    t.reset();
-    nuskaitymas("stud10000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
-
-    t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
-
-    isvedimas(nabagai, "nabagai10k.txt");
-    isvedimas(protingi, "protingi10k.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
-    cout << "\n";
-    //3.*****************************************************************************
-    cout << "3. 100 000 studentu:" << "\n";
-    t0.reset();
-   
-    create_file("stud100000.txt", 100000);
-
-    t.reset();
-    nuskaitymas("stud100000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
-
-    t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
-
-    isvedimas(nabagai, "nabagai100k.txt");
-    isvedimas(protingi, "protingi100k.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
-    cout << "\n";
-    //4.*****************************************************************************
-    cout << "4. 1 000 000 studentu:" << "\n";
-    t0.reset();
-
-    create_file("stud1000000.txt", 1000000);
-
-    t.reset();
-    nuskaitymas("stud1000000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
-
-    t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
-
-    isvedimas(nabagai, "nabagai1mln.txt");
-    isvedimas(protingi, "protingi1mln.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
-    cout << "\n";
-
-    //5.*****************************************************************************
-    cout << "5. 10 000 000 studentu:" << "\n";
-    t0.reset();
-
-    create_file("stud10000000.txt", 10000000);
-
-    t.reset();
-    nuskaitymas("stud10000000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
-
-    t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
-
-    isvedimas(nabagai, "nabagai10mln.txt");
-    isvedimas(protingi, "protingi10mln.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
-
-}
-
+    //isvedimas(nabagai_lst, "nabagai.txt");
+    //isvedimas(protingi_lst, "protingi.txt");
+    cout << "Visas testo laikas: " << t0_lst << " s" << endl;
 
     
+
+    grupe_lst.clear();
+    nabagai_lst.clear();
+    protingi_lst.clear();
+
+    cout << endl << "**********************NAUDOJANT VEKTORIUS**********************" << endl << endl;
+
+
+    t0.reset();
+    t.reset();
+    if (n == 1000) { nuskaitymas_vec("stud1000.txt"); }
+    else if (n == 10000) { nuskaitymas_vec("stud10000.txt"); }
+    else if (n == 100000) { nuskaitymas_vec("stud100000.txt"); }
+    else if (n == 1000000) { nuskaitymas_vec("stud1000000.txt"); }
+    else if (n == 10000000) { nuskaitymas_vec("stud10000000.txt"); }
+    else {
+        cout << "KLAIDA" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    float t1_vec = t.elapsed();
+    cout << "Nuskaityti duomenis is failo uztruko: " << t1_vec << " s" << endl;
+
+    t.reset();
+    padalijimas(grupe_vec);
+    float t2_vec = t.elapsed();
+    float t0_vec = t0.elapsed();
+    cout << "Studentu padalijimas i 2 vektorius uztruko: " << t2_vec << " s" << endl;
+    cout << "Visas testo laikas: " << t0_vec << " s" << endl << endl;
+    
+
+    grupe_vec.clear();
+    nabagai_vec.clear();
+    protingi_vec.clear();
+
+    cout << "Nuskaitymo laiko santykis t_vec/t_lst: " << t1_vec / t1_lst << endl;
+    cout << "Padalijimo laiko santykis t_vec/t_lst: " << t2_vec / t2_lst << endl;
+    cout<<"Viso testo laiko santykis t_vec/t_lst: "<< t0_vec / t0_lst << endl;
+
+    system("pause");
+}
+
 
     

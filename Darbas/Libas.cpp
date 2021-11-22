@@ -15,11 +15,16 @@ using std::vector;
 using std::ifstream;
 using std::stringstream;
 using std::exception;
-using std::list;
 
-list<studentas> grupe;
-list<studentas> nabagai;
-list<studentas> protingi;
+vector<studentas> grupe_vec;
+vector<studentas> nabagai_vec;
+vector<studentas> protingi_vec;
+
+list<studentas> grupe_lst;
+list<studentas> nabagai_lst;
+list<studentas> protingi_lst;
+
+
 
 
 void pild(studentas& kint) {
@@ -125,8 +130,8 @@ float mediana(vector<float> vec) {
     vecSize vid = size / 2;
     return size % 2 == 0 ? (vec[vid] + vec[vid - 1]) / 2 : vec[vid];
 }
-bool mycompare(studentas a, studentas b) {
-    return a.vardas.compare(b.vardas) < 0;
+bool mycompare(studentas& a, studentas& b) {
+    return a.galutinisVid>b.galutinisVid;
 }
 void printfile(studentas& stud) {
     cout << setw(20) << left << stud.vardas << setw(20) << left << stud.pavarde << setw(20) << left << setprecision(3) << stud.galutinisVid << setw(20) << left << setprecision(3) << stud.galutinisMed << endl;
@@ -148,9 +153,113 @@ void tikrinimas(int &a) {
     }
     while (cin.fail() == true);
 }
+void create_file(string name, float sk) {
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(1, 10);
+
+    std::ofstream failas;
+    failas.open(name);
+
+    for (int i = 1;i < sk + 1;i++) {
+        int nd1 = dist(mt);
+        int nd2 = dist(mt);
+        int nd3 = dist(mt);
+        int nd4 = dist(mt);
+        int nd5 = dist(mt);
+        int egz = dist(mt);
+        failas << "Vardas" << i << "    Pavarde" << i << "        " << setw(10) << left << nd1 << setw(10) << left << nd2 << setw(10) << left << nd3 << setw(10) << left << nd4 << setw(10) << left << nd5 << setw(10) << left << egz << endl;
+    }
+    failas.close();
+
+}
+
+//Vektoriams:
+void nuskaitymas_vec(string read) {
+
+    string eil;
+    vector<string> eilutes;
+
+    ifstream failas(read);
+    if (!failas) {
+        throw exception();
+    }
+    while (failas) {
+        if (!failas.eof()) {
+            std::getline(failas, eil);
+            eilutes.push_back(eil);
+
+        }
+        else break;
+
+    }
+    failas.close();
+
+    eilutes.pop_back();
 
 
-void nuskaitymas(string read) {
+    for (auto eil : eilutes) {
+        stringstream s(eil);
+        studentas tempas;
+        float sum, vid;
+        s >> tempas.vardas >> tempas.pavarde;
+        int k;
+        while (s >> k) {
+            tempas.nd.push_back(k);
+
+        }
+
+        tempas.egzam = tempas.nd.back();
+        tempas.nd.pop_back();
+
+
+        sum = std::accumulate(tempas.nd.begin(), tempas.nd.end(), 0);
+
+
+        vid = sum / tempas.nd.size();
+
+        float med = mediana(tempas.nd);
+
+
+
+        tempas.galutinisVid = 0.4 * vid + 0.6 * tempas.egzam;
+        tempas.galutinisMed = med * 0.4 + 0.6 * tempas.egzam;
+        grupe_vec.push_back(tempas);
+
+
+    }
+
+
+
+}
+void padalijimas(vector<studentas>& vec) {
+
+    for (auto p:vec) {
+        if (p.galutinisVid < 5) {
+            nabagai_vec.push_back(p);
+        }
+        else {
+            protingi_vec.push_back(p);
+        }
+
+    }
+
+}
+void isvedimas(vector<studentas>& vec, string pav) {
+    std::ofstream failas;
+    failas.open(pav);
+    failas << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis balas" << "\n";
+    for (auto p : vec) {
+
+        failas << setw(20) << left << p.vardas << setw(20) << left << p.pavarde << setw(20) << left << p.galutinisVid << "\n";
+    }
+
+    failas.close();
+}
+
+
+//Listams:
+void nuskaitymas_lst(string read) {
 
     string eil;
     list<string> eilutes;
@@ -199,55 +308,36 @@ void nuskaitymas(string read) {
 
         tempas.galutinisVid = 0.4 * vid + 0.6 * tempas.egzam;
         tempas.galutinisMed = med * 0.4 + 0.6 * tempas.egzam;
-        grupe.push_back(tempas);
+        grupe_lst.push_back(tempas);
 
 
     }
 
 
-
-}
-void create_file(string name, float sk) {
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(1, 10);
-
-    std::ofstream failas;
-    failas.open(name);
-
-    for (int i = 1;i < sk + 1;i++) {
-        int nd1 = dist(mt);
-        int nd2 = dist(mt);
-        int nd3 = dist(mt);
-        int nd4 = dist(mt);
-        int nd5 = dist(mt);
-        int egz = dist(mt);
-        failas << "Vardas" << i << "    Pavarde" << i << "        " << setw(10) << left << nd1 << setw(10) << left << nd2 << setw(10) << left << nd3 << setw(10) << left << nd4 << setw(10) << left << nd5 << setw(10) << left << egz << "\n";
-    }
-    failas.close();
 
 }
 void padalijimas(list<studentas>& lst) {
 
     for (auto p : lst) {
         if (p.galutinisVid < 5) {
-            nabagai.push_back(p);
+            nabagai_lst.push_back(p);
         }
         else {
-            protingi.push_back(p);
+            protingi_lst.push_back(p);
         }
-    }
 
+    }
 
 }
 void isvedimas(list<studentas>& lst, string pav) {
     std::ofstream failas;
     failas.open(pav);
     failas << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis balas" << "\n";
-    for (auto p:lst) {
+    for (auto p : lst) {
 
         failas << setw(20) << left << p.vardas << setw(20) << left << p.pavarde << setw(20) << left << p.galutinisVid << "\n";
     }
 
     failas.close();
 }
+
