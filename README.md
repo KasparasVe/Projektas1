@@ -57,3 +57,4 @@ Viso testo laiko santykis t_vec/t_lst: 1.00771<br>
 
 IŠVADOS: tiek vektoriams, tiek listams nuskaitymo laikas maždaug vienodas, studentų padalijimas į dvi grupes šiek tiek greitestis naudojant listus.
 
+CPU: Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz   2.11 GHz; RAM: 8GB; SSD: NVMe INTEL SSDPEKNW512G8
