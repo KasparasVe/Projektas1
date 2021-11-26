@@ -10,128 +10,83 @@ using std::setw;
 using std::left;
 
 
+
 int main()
 {
-
-    //1.*****************************************************************************
-    cout << "1. 1 000 studentu:" << "\n";
-    Timer t0;
-    create_file("stud1000.txt", 1000);
-
-    Timer t;
-    nuskaitymas("stud1000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
-
-    t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
-
-    isvedimas(nabagai, "nabagai1k.txt");
-    isvedimas(protingi, "protingi1k.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
-    cout << "\n";
-    //2.*****************************************************************************
-    cout << "2. 10 000 studentu:" << "\n";
-    t0.reset();
-
-    create_file("stud10000.txt", 10000);
-
-    t.reset();
-    nuskaitymas("stud10000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
-
-    t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
-
-    isvedimas(nabagai, "nabagai10k.txt");
-    isvedimas(protingi, "protingi10k.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
-    cout << "\n";
-    //3.*****************************************************************************
-    cout << "3. 100 000 studentu:" << "\n";
-    t0.reset();
-   
+    cout << "NAUDOJANT VEKTORIUS:" << endl << endl;
     create_file("stud100000.txt", 100000);
+    nuskaitymas_vec("stud100000.txt");
+    Timer t;
+    padalijimas1(grupe_vec);
+    float t1 = t.elapsed();
+    cout << "Padalijimas 1 budu uztruko: " << t1 << endl;
+
+    protingi_vec.clear();
+    nabagai_vec.clear();
 
     t.reset();
-    nuskaitymas("stud100000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
+    padalijimas2(grupe_vec);
+    float t2 = t.elapsed();
+    cout << "Padalijimas 2 budu uztruko: " << t2 << endl;
+    cout << "Santykis t1/t2: " << t1 / t2 << endl << endl;
 
-    t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
-
-    isvedimas(nabagai, "nabagai100k.txt");
-    isvedimas(protingi, "protingi100k.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
     system("pause");
-    cout << "\n";
-    //4.*****************************************************************************
-    cout << "4. 1 000 000 studentu:" << "\n";
-    t0.reset();
+    cout << endl;
+    //************************************************************************************
 
-    create_file("stud1000000.txt", 1000000);
 
+    cout << "NAUDOJANT LISTUS:" << endl << endl;
+    
+    nuskaitymas_lst("stud100000.txt");
     t.reset();
-    nuskaitymas("stud1000000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
+    padalijimas1(grupe_lst);
+    t1 = t.elapsed();
+    cout << "Padalijimas 1 budu uztruko: " << t1 << endl;
 
+    protingi_lst.clear();
+    nabagai_lst.clear();
+    
     t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
+    padalijimas2(grupe_lst);
+    t2 = t.elapsed();
+    cout << "Padalijimas 2 budu uztruko: " << t2 << endl;
+    cout << "Santykis t1/t2: " << t1 / t2 << endl<<endl;
 
-    isvedimas(nabagai, "nabagai1mln.txt");
-    isvedimas(protingi, "protingi1mln.txt");
-
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
     system("pause");
-    cout << "\n";
+    cout << endl;
+    //*************************************************************************************
 
-    //5.*****************************************************************************
-    cout << "5. 10 000 000 studentu:" << "\n";
-    t0.reset();
-
-    create_file("stud10000000.txt", 10000000);
-
+    
+    nuskaitymas_vec("stud100000.txt");
     t.reset();
-    nuskaitymas("stud10000000.txt");
-    cout << "Nuskaityti duomenis is failo uztruko: " << t.elapsed() << " s" << endl;
-
+    padalijimas1(grupe_vec);
+    t1 = t.elapsed();
+    protingi_vec.clear();
+    nabagai_vec.clear();
     t.reset();
-    padalijimas(grupe);
-    cout << "Studentu padalijimas i 2 listus uztruko: " << t.elapsed() << " s" << endl;
+    padalijimas2(grupe_vec);
+    t2 = t.elapsed();
+    grupe_vec.clear();
+    protingi_vec.clear();
+    nabagai_vec.clear();
+    nuskaitymas_vec("stud100000.txt");
+    t.reset();
 
-    isvedimas(nabagai, "nabagai10mln.txt");
-    isvedimas(protingi, "protingi10mln.txt");
+    padalijimas3(grupe_vec);
 
-    grupe.clear();
-    nabagai.clear();
-    protingi.clear();
 
-    cout << "Visas testo laikas: " << t0.elapsed() << " s" << endl;
-    system("pause");
+    float t3 = t.elapsed();
+
+
+
+    cout << "padalijimas 1 budu uztruko: " << t1 << " s" << endl;
+    cout << "padalijimas 2 budu uztruko: " << t2 << " s" << endl;
+    cout << "padalijimas 3 budu uztruko: " << t3 << " s" << endl;
+
+    cout << "Santykis t1/t3: " << t1 / t3 << endl;
+    cout << "Santykis t2/t3: " << t2 / t3 << endl;
 
 }
 
-
-    
 
     
