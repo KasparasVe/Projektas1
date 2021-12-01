@@ -44,16 +44,19 @@ void pild(studentas& kint) {
         cin >> ats;
     }
     if (ats == 't') {
+        std::random_device rd;
+        std::mt19937 mt(rd());
+        std::uniform_int_distribution<int> dist(1, 10);
         cout << "Iveskite pazymiu skaiciu: ";
         int sk;
-        
+
         tikrinimas(sk);
         for (int i = 0;i < sk;i++) {
-            int x = rand() % 10 + 1;
+            int x = dist(mt);
             kint.nd.push_back(x);
             sum += kint.nd[i];
         }
-        kint.egzam = rand() % 10 + 1;
+        kint.egzam = dist(mt);
         cout << "Ar galutini bala norite skaiciuoti pagal vidurki ar mediana? (Iveskite 'v', jei pagal vidurki, 'm' - pagal mediana):  ";
         cin >> kint.skaiciavimas;
         while (cin.fail() || (kint.skaiciavimas != 'v' && kint.skaiciavimas != 'm')) {
@@ -90,10 +93,10 @@ void pild(studentas& kint) {
 
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        
+
 
         cout << "Iveskite egzamino bala: ";
-        
+
         tikrinimas(kint.egzam);
 
         cout << "Ar galutini bala norite skaiciuoti pagal vidurki ar mediana? (Iveskite 'v', jei pagal vidurki, 'm' - pagal mediana):  ";
@@ -104,7 +107,7 @@ void pild(studentas& kint) {
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cin >> kint.skaiciavimas;
         }
-        
+
         vid = sum / count;
         med = mediana(kint.nd);
 
@@ -130,7 +133,7 @@ float mediana(vector<float> vec) {
     vecSize vid = size / 2;
     return size % 2 == 0 ? (vec[vid] + vec[vid - 1]) / 2 : vec[vid];
 }
-bool mycompare(studentas a, studentas b) {
+bool mycompare(studentas& a, studentas& b) {
     return a.galutinisVid>b.galutinisVid;
 }
 void printfile(studentas& stud) {
@@ -264,14 +267,14 @@ void padalijimas2(vector<studentas>& vec) {
     vec.erase(remove_if(vec.begin(), vec.end(), func), vec.end());
 }
 void padalijimas3(vector<studentas>& vec){
-    std::partition(grupe_vec.begin(), grupe_vec.end(), pred);
+    std::partition(vec.begin(), vec.end(), pred);
 
-    vector<studentas>::iterator it = std::partition_point(grupe_vec.begin(), grupe_vec.end(), pred);
-    for (it;it != grupe_vec.end();it++) {
+    vector<studentas>::iterator it = std::partition_point(vec.begin(), vec.end(), pred);
+    for (it;it != vec.end();it++) {
         nabagai_vec.push_back(*it);
     }
 
-    grupe_vec.erase(std::partition_point(grupe_vec.begin(), grupe_vec.end(), pred), grupe_vec.end());
+    vec.erase(std::partition_point(vec.begin(), vec.end(), pred), vec.end());
 }
 void isvedimas(vector<studentas>& vec, string pav) {
     std::ofstream failas;
@@ -377,5 +380,143 @@ void isvedimas(list<studentas>& lst, string pav) {
     }
 
     failas.close();
+}
+
+void testas() {
+    cout << "NAUDOJANT VEKTORIUS:" << endl << endl;
+
+    nuskaitymas_vec("stud100000.txt");
+    Timer t;
+    padalijimas1(grupe_vec);
+    float t1 = t.elapsed();
+    cout << "Padalijimas 1 budu uztruko: " << t1 << endl;
+
+    protingi_vec.clear();
+    nabagai_vec.clear();
+
+    t.reset();
+    padalijimas2(grupe_vec);
+    float t2 = t.elapsed();
+    cout << "Padalijimas 2 budu uztruko: " << t2 << endl;
+    cout << "Santykis t1/t2: " << t1 / t2 << endl << endl;
+
+    system("pause");
+    cout << endl;
+    //************************************************************************************
+
+
+    cout << "NAUDOJANT LISTUS:" << endl << endl;
+
+    nuskaitymas_lst("stud100000.txt");
+    t.reset();
+    padalijimas1(grupe_lst);
+    t1 = t.elapsed();
+    cout << "Padalijimas 1 budu uztruko: " << t1 << endl;
+
+    protingi_lst.clear();
+    nabagai_lst.clear();
+
+    t.reset();
+    padalijimas2(grupe_lst);
+    t2 = t.elapsed();
+    cout << "Padalijimas 2 budu uztruko: " << t2 << endl;
+    cout << "Santykis t1/t2: " << t1 / t2 << endl << endl;
+
+    system("pause");
+    cout << endl;
+    //*************************************************************************************
+
+
+    nuskaitymas_vec("stud100000.txt");
+    t.reset();
+    padalijimas1(grupe_vec);
+    t1 = t.elapsed();
+    protingi_vec.clear();
+    nabagai_vec.clear();
+    t.reset();
+    padalijimas2(grupe_vec);
+    t2 = t.elapsed();
+    grupe_vec.clear();
+    protingi_vec.clear();
+    nabagai_vec.clear();
+    nuskaitymas_vec("stud100000.txt");
+    t.reset();
+
+    padalijimas3(grupe_vec);
+
+
+    float t3 = t.elapsed();
+
+
+
+    cout << "padalijimas 1 budu uztruko: " << t1 << " s" << endl;
+    cout << "padalijimas 2 budu uztruko: " << t2 << " s" << endl;
+    cout << "padalijimas 3 budu uztruko: " << t3 << " s" << endl;
+
+    cout << "Santykis t1/t3: " << t1 / t3 << endl;
+    cout << "Santykis t2/t3: " << t2 / t3 << endl;
+}
+void uzpildymas() {
+    int k;
+    char answ, g;
+    string fileName;
+
+
+    cout << "Ar norite duomenis nuskaityti is failo? Jei taip, iveskite 't', jei ne - iveskite 'n': ";
+    cin >> answ;
+    if (answ == 't') {
+        cout << "Iveskite failo pavadinima: ";
+        cin >> fileName;
+
+        try {
+            nuskaitymas_vec(fileName);
+        }
+
+
+        catch (std::exception& e) {
+            cout << "Failas neegzistuoja! Patikrinkite failo varda ir meginkite is naujo..." << endl;
+            exit(EXIT_FAILURE);
+        }
+        char ats2;
+        cout << "Ar norite studentus padalinti i 2 grupes ir isvesti i 2 failus? Jei taip, iveskite 't', jei ne - iveskite 'n': "<<endl;
+        cin >> ats2;
+        if (ats2 == 't') {
+            padalijimas3(grupe_vec);
+            isvedimas(grupe_vec, "Protingieji.txt");
+            isvedimas(nabagai_vec, "Nabagai.txt");
+        }
+        else{
+            cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis(Vid.)/Galutinis(Med.)" << endl;
+            for (auto p : grupe_vec) { printas(p); }
+        }
+        
+
+    }
+    else {
+        cout << "Iveskite studentu skaiciu: ";
+
+        tikrinimas(k);
+        for (int i = 0; i < k; i++) {
+            studentas temp;
+            pild(temp);
+            grupe_vec.push_back(temp);
+        }
+        char ats3;
+        cout << "Ar norite studentus padalinti i 2 grupes ir isvesti i 2 failus? Jei taip, iveskite 't', jei ne - iveskite 'n': " << endl;
+        cin >> ats3;
+        if (ats3 == 't') {
+            padalijimas3(grupe_vec);
+            isvedimas(grupe_vec, "Protingieji.txt");
+            isvedimas(nabagai_vec, "Nabagai.txt");
+        }
+        else {
+            cout << "\n" << endl;
+            cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis(Vid.)/Galutinis(Med.)" << endl;
+            for (auto p : grupe_vec)
+                printas(p);
+        }
+        }
+        
+
 }
 
