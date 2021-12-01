@@ -44,6 +44,15 @@ v1.0:
 * sukurtas trečias dalijimo metodas, naudojant std::partition
 * atliktas testas, lyginintis trečio padalijimo metodo spartą su ankstesniais buvusiais dviem metodais
 
+**Naudojimosi instrukcija:**<br>
+Atsakykite, ar norite atlikti padalijimo strategijų spartos testą. <br>
+* Jei atsakėte 't', bus atliktas spartos testas, lyginantis 2 padalijimo strategijas vektoriams ir listams, bei 3 strategijos spartą su pirmomis 2 strategijomis. Rezultatai išvedami į ekraną.
+* Jei atsakėte 'n', pasirinkite, ar norite duomenis nuskaityti iš failo. <br>
+Jei atsakėte 't', įveskite egzistuojančio failo pavadinimą. Pasirinkite, ar norite studentus padalinti į 2 grupes ir išvesti į 2 failus. <br>
+Jei atsakėte 't', bus sukurtas failas Nabagai.txt, kuriame talpinami visi studentai su galutiniu balu <5, ir failas Protingi.txt, kuriame talpinami likę studentai (galutinis balas >= 5). <br>
+Jei atsakėte 'n', studentai išvedami į ekraną.<br>
+Jei į  antrą klausimą atsakėte 'n', studentų duomenis įveskite patys, sekdami instrukcijas ekrane.<br>
+
 
 <h3>REZULTATAI SU FIKSUOTU 100 000 STUDENTŲ FAILU:</h3>
 
